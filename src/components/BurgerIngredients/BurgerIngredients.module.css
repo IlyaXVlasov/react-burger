@@ -1,0 +1,60 @@
+.ingredients {
+  max-width: 600px;
+  background: #131316;
+  margin-left: 380px;
+}
+
+.wrapper {
+  cursor: auto;
+}
+
+.scroll {
+  scrollbar-width: 8px;
+  max-height: 33%;
+  cursor: pointer;
+  overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+  max-width: 8px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: hsl(240, 8%, 20%);
+  max-height: 664px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 3px solid #8585ad;
+  box-sizing: border-box;
+  max-height: 492px;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu {
+  display: flex;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 272px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.text {
+  text-align: center;
+}
