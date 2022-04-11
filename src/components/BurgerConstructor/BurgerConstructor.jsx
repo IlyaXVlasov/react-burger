@@ -1,13 +1,12 @@
 import React from "react";
 import burgerStyles from "./BurgerConstructor.module.css";
-import { data } from "../../utils/data.js";
 import {
   ConstructorElement,
   CurrencyIcon,
   DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-//import { isTemplateExpression } from "typescript";
+import PropTypes from "prop-types";
 
 const BreadHeight = () => {
   return (
@@ -46,7 +45,8 @@ const Stuffing = (props) => {
   );
 };
 
-const BurgerConstructor = () => {
+const BurgerConstructor = (props) => {
+  const { data, onOverlayClick } = props;
   return (
     <section className={`${burgerStyles.container} mt-25 ml-10`}>
       <div className={`${burgerStyles.box} mr-4 ml-4`}>
@@ -76,13 +76,21 @@ const BurgerConstructor = () => {
         <svg className={`${burgerStyles.icon} mr-10`}>
           <CurrencyIcon />
         </svg>
-        <Button type="primary" size="small">
+        <Button
+          onClick={() => onOverlayClick(true)}
+          type="primary"
+          size="small"
+        >
           {" "}
           Оформить заказ{" "}
         </Button>
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;

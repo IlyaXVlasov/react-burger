@@ -5,8 +5,7 @@ import {
   Tab,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import productStyles from "./BurgerIngredients.module.css";
-import { data } from "../../utils/data.js";
-//import { isTemplateLiteral } from "typescript";
+import PropTypes from "prop-types";
 
 const Menu = () => {
   const [current, setCurrent] = React.useState("one");
@@ -25,9 +24,13 @@ const Menu = () => {
   );
 };
 
-const MarkupCardBurger = (item) => {
+const MarkupCardBurger = ({ item, clicked }) => {
   return (
-    <ul key={item._id} className={`${productStyles.list} mb-8`}>
+    <ul
+      onClick={() => clicked(item)}
+      key={item._id}
+      className={`${productStyles.list} mb-8`}
+    >
       <li className={`${productStyles.cell} mb-2 ml-8 mr-8`}>
         <Counter count={0} size="small" />
         <img src={item.image} alt={item.image}></img>
@@ -44,7 +47,7 @@ const MarkupCardBurger = (item) => {
   );
 };
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ data, clicked }) => {
   return (
     <section className={`${productStyles.ingredients} mt-1`}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -56,7 +59,14 @@ const BurgerIngredients = () => {
             {data
               .filter((item) => item["type"] === "bun")
               .map((item) => {
-                return MarkupCardBurger(item);
+                return (
+                  <MarkupCardBurger
+                    item={item}
+                    onClick={() => clicked(item)}
+                    key={item._id}
+                    clicked={clicked}
+                  />
+                );
               })}
           </div>
           <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
@@ -64,7 +74,14 @@ const BurgerIngredients = () => {
             {data
               .filter((item) => item["type"] === "sauce")
               .map((item) => {
-                return MarkupCardBurger(item);
+                return (
+                  <MarkupCardBurger
+                    item={item}
+                    onClick={() => clicked(item)}
+                    key={item._id}
+                    clicked={clicked}
+                  />
+                );
               })}
           </div>
           <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
@@ -72,13 +89,25 @@ const BurgerIngredients = () => {
             {data
               .filter((item) => item["type"] === "main")
               .map((item) => {
-                return MarkupCardBurger(item);
+                return (
+                  <MarkupCardBurger
+                    item={item}
+                    onClick={() => clicked(item)}
+                    key={item._id}
+                    clicked={clicked}
+                  />
+                );
               })}
           </div>
         </div>
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  clicked: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;
