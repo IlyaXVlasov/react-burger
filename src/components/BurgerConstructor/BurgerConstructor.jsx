@@ -46,7 +46,7 @@ const Stuffing = (props) => {
 };
 
 const BurgerConstructor = (props) => {
-  const { data, onOverlayClick } = props;
+  const { data, onClickSendOrder } = props;
   return (
     <section className={`${burgerStyles.container} mt-25 ml-10`}>
       <div className={`${burgerStyles.box} mr-4 ml-4`}>
@@ -77,7 +77,7 @@ const BurgerConstructor = (props) => {
           <CurrencyIcon />
         </svg>
         <Button
-          onClick={() => onOverlayClick(true)}
+          onClick={() => onClickSendOrder(true)}
           type="primary"
           size="small"
         >
@@ -91,6 +91,11 @@ const BurgerConstructor = (props) => {
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClickSendOrder: PropTypes.func.isRequired,
+};
+
+Stuffing.propTypes = {
+  props: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;

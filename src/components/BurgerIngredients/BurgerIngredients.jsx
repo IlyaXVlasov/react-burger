@@ -24,10 +24,10 @@ const Menu = () => {
   );
 };
 
-const MarkupCardBurger = ({ item, clicked }) => {
+const MarkupCardBurger = ({ item, onClick }) => {
   return (
     <ul
-      onClick={() => clicked(item)}
+      onClick={() => onClick(item)}
       key={item._id}
       className={`${productStyles.list} mb-8`}
     >
@@ -47,7 +47,7 @@ const MarkupCardBurger = ({ item, clicked }) => {
   );
 };
 
-const BurgerIngredients = ({ data, clicked }) => {
+const BurgerIngredients = ({ data, onClick }) => {
   return (
     <section className={`${productStyles.ingredients} mt-1`}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -62,9 +62,9 @@ const BurgerIngredients = ({ data, clicked }) => {
                 return (
                   <MarkupCardBurger
                     item={item}
-                    onClick={() => clicked(item)}
+                    onClick={() => onClick(item)}
                     key={item._id}
-                    clicked={clicked}
+                    clicked={onClick}
                   />
                 );
               })}
@@ -77,9 +77,9 @@ const BurgerIngredients = ({ data, clicked }) => {
                 return (
                   <MarkupCardBurger
                     item={item}
-                    onClick={() => clicked(item)}
+                    onClick={() => onClick(item)}
                     key={item._id}
-                    clicked={clicked}
+                    clicked={onClick}
                   />
                 );
               })}
@@ -92,9 +92,9 @@ const BurgerIngredients = ({ data, clicked }) => {
                 return (
                   <MarkupCardBurger
                     item={item}
-                    onClick={() => clicked(item)}
+                    onClick={() => onClick(item)}
                     key={item._id}
-                    clicked={clicked}
+                    clicked={onClick}
                   />
                 );
               })}
@@ -107,7 +107,12 @@ const BurgerIngredients = ({ data, clicked }) => {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  clicked: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+MarkupCardBurger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
 };
 
 export default BurgerIngredients;

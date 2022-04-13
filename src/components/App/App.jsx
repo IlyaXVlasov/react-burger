@@ -19,11 +19,16 @@ const App = () => {
     const getProduct = async () => {
       try {
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(
+            `Ошибка по адресу ${url}, статус ошибки ${response.status}`
+          );
+        }
         const jsonResponse = await response.json();
         //console.log(jsonResponse.data);
         setProduct(jsonResponse.data);
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
       }
     };
     getProduct();
@@ -34,11 +39,11 @@ const App = () => {
     setDetails(false);
   };
 
-  const onEscFunction = (event) => {
+  const handleEscape = (event) => {
     event.key === "Escape" && closeModals();
   };
 
-  const ingredientsClick = (item) => {
+  const handleIngredientsClick = (item) => {
     setClickedDetails(item);
     setDetails(true);
   };
@@ -46,20 +51,20 @@ const App = () => {
     <>
       <AppHeader />
       <main className={app.main}>
-        <BurgerIngredients data={product} clicked={ingredientsClick} />
+        <BurgerIngredients data={product} onClick={handleIngredientsClick} />
 
-        <BurgerConstructor data={product} onOverlayClick={setOrder} />
+        <BurgerConstructor data={product} onClickSendOrder={setOrder} />
       </main>
       {order && (
-        <Modal onOverlayClick={closeModals} onEscKeydown={onEscFunction}>
-          <OrderModal onOverlayClick={setOrder} />
+        <Modal onClickSendOrder={closeModals} onEscKeydown={handleEscape}>
+          <OrderModal onClickSendOrder={setOrder} />
         </Modal>
       )}
       {details && (
         <Modal
           title="Детали ингредиента"
-          onOverlayClick={closeModals}
-          onEscKeydown={onEscFunction}
+          onClickSendOrder={closeModals}
+          onEscKeydown={handleEscape}
         >
           <ModalDetails item={clickedDetails} />
         </Modal>
