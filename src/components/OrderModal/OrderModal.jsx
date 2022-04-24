@@ -1,6 +1,7 @@
 import React from "react";
 import orderStyles from "./OrderModal.module.css";
 import svg from "../../image/done.svg";
+import PropTypes from "prop-types";
 
 const OrderModal = (props) => {
   const { orderNumber } = props;
@@ -35,4 +36,9 @@ const OrderModal = (props) => {
     </ul>
   );
 };
+
+OrderModal.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
+};
+
 export default OrderModal;

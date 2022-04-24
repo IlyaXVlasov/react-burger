@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import burgerStyles from "./BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -7,10 +7,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { ProductContex, HendleContex } from "../../contex";
+import { ProductContex } from "../../contex";
 import { baseUrl } from "../App/App";
-import Modal from "../Modal/Modal";
-import OrderModal from "../OrderModal/OrderModal";
+import checkResponse from "../../utils/checkResponse";
 
 const BreadHeight = () => {
   return (
@@ -51,20 +50,22 @@ const Stuffing = (props) => {
 
 const BurgerConstructor = (props) => {
   const { onClickSendOrder, setOrderData } = props;
-  //const setOrder = useContext(HendleContex);
   const product = useContext(ProductContex);
-
-  const answer = () => {
+  const productId = product.map((item) => item._id);
+  const postOrder = () => {
     fetch(`${baseUrl}/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        ingredients: ["60d3b41abdacab0026a733c9", "60d3b41abdacab0026a733cc"],
+        ingredients: productId,
       }),
     })
-      .then((res) => (res.ok ? res.json() : Promise.reject("Ошибка")))
+      .then(checkResponse)
       .then((res) => {
         setOrderData(res);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   return (
@@ -103,7 +104,7 @@ const BurgerConstructor = (props) => {
 
         <Button
           onClick={() => {
-            answer();
+            postOrder();
             onClickSendOrder(true);
           }}
           type="primary"
@@ -119,10 +120,6 @@ const BurgerConstructor = (props) => {
 
 BurgerConstructor.propTypes = {
   onClickSendOrder: PropTypes.func.isRequired,
-};
-
-Stuffing.propTypes = {
-  props: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;

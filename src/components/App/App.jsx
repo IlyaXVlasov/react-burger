@@ -4,7 +4,7 @@ import AppHeader from "../AppHeader/AppHeader.jsx";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
 import Modal from "../Modal/Modal.jsx";
-import ModalDetails from "../ModalDetails/ModalDetails.jsx";
+import IgrendientDetails from "../IgrendientDetails/IgrendientDetails";
 import OrderModal from "../OrderModal/OrderModal.jsx";
 import { ProductContex } from "../../contex.js";
 
@@ -76,7 +76,7 @@ const App = () => {
           onClickSendOrder={closeModals}
           onEscKeydown={handleEscape}
         >
-          <ModalDetails item={clickedDetails} />
+          <IgrendientDetails item={clickedDetails} />
         </Modal>
       )}
     </>

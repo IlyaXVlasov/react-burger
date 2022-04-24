@@ -27,11 +27,7 @@ const Modal = (props) => {
         </aside>
         {children}
       </section>
-      <ModalOverlay
-        onClick={() => {
-          onClickSendOrder();
-        }}
-      />
+      <ModalOverlay onClick={onClickSendOrder} />
     </>,
     modalContainer
   );
