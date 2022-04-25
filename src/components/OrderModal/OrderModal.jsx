@@ -1,13 +1,16 @@
 import React from "react";
 import orderStyles from "./OrderModal.module.css";
 import svg from "../../image/done.svg";
+import PropTypes from "prop-types";
 
-const OrderModal = () => {
+const OrderModal = (props) => {
+  const { orderNumber } = props;
+
   return (
     <ul className={orderStyles.list}>
       <li>
         <span className="text text_type_digits-large mt-30 ml-25 mr-25 mb-8">
-          034536
+          {orderNumber}
         </span>
       </li>
       <li>
@@ -32,6 +35,10 @@ const OrderModal = () => {
       </li>
     </ul>
   );
+};
+
+OrderModal.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
 };
 
 export default OrderModal;

@@ -1,8 +1,8 @@
 import React from "react";
-import detailsStyles from "./ModalDetails.module.css";
+import detailsStyles from "./IgrendientDetails.module.css";
 import PropTypes from "prop-types";
 
-const ModalDetails = ({ item }) => {
+const IgrendientDetails = ({ item }) => {
   return (
     <ul className={`${detailsStyles.list}  ml-25 mr-25`}>
       <li>
@@ -64,8 +64,8 @@ const ModalDetails = ({ item }) => {
   );
 };
 
-ModalDetails.propTypes = {
+IgrendientDetails.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default ModalDetails;
+export default IgrendientDetails;
