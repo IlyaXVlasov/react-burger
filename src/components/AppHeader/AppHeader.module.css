@@ -8,7 +8,8 @@
 }
 
 .content {
-  width: calc(100% - 640px);
+  max-width: calc(100% - 640px);
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

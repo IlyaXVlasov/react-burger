@@ -1,4 +1,3 @@
-import React from "react";
 import {
   CurrencyIcon,
   Counter,
@@ -6,6 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import productStyles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { ingredient } from "../../services/actions/actions";
 
 const Menu = () => {
   const [current, setCurrent] = React.useState("one");
@@ -47,7 +49,9 @@ const MarkupCardBurger = ({ item, onClick }) => {
   );
 };
 
-const BurgerIngredients = ({ data, onClick }) => {
+const BurgerIngredients = ({ onClick }) => {
+  const dispatch = useDispatch();
+  dispatch(ingredient());
   return (
     <section className={`${productStyles.ingredients} mt-1`}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -56,7 +60,7 @@ const BurgerIngredients = ({ data, onClick }) => {
         <div className={productStyles.wrapper}>
           <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
           <div className={productStyles.box}>
-            {data
+            {items
               .filter((item) => item["type"] === "bun")
               .map((item) => {
                 return (
@@ -71,7 +75,7 @@ const BurgerIngredients = ({ data, onClick }) => {
           </div>
           <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
           <div className={productStyles.box}>
-            {data
+            {items
               .filter((item) => item["type"] === "sauce")
               .map((item) => {
                 return (
@@ -86,7 +90,7 @@ const BurgerIngredients = ({ data, onClick }) => {
           </div>
           <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
           <div className={productStyles.box}>
-            {data
+            {items
               .filter((item) => item["type"] === "main")
               .map((item) => {
                 return (
@@ -106,7 +110,6 @@ const BurgerIngredients = ({ data, onClick }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

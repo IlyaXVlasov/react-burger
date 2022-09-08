@@ -1,4 +1,3 @@
-import React from "react";
 import burgerStyles from "./BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -7,6 +6,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { baseUrl } from "../App/App";
+import checkResponse from "../../utils/checkResponse";
+import { constructor } from "../../services/actions/actions";
 
 const BreadHeight = () => {
   return (
@@ -46,7 +49,26 @@ const Stuffing = (props) => {
 };
 
 const BurgerConstructor = (props) => {
-  const { data, onClickSendOrder } = props;
+  const { onClickSendOrder, setOrderData } = props;
+  const dispatch = useDispatch();
+  const productId = dispatch(constructor());
+  //.map((item) => item._id);
+  const postOrder = () => {
+    fetch(`${baseUrl}/orders`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ingredients: productId,
+      }),
+    })
+      .then(checkResponse)
+      .then((res) => {
+        setOrderData(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <section className={`${burgerStyles.container} mt-25 ml-10`}>
       <div className={`${burgerStyles.box} mr-4 ml-4`}>
@@ -55,7 +77,7 @@ const BurgerConstructor = (props) => {
       <div className={burgerStyles.scroll}>
         <div className={burgerStyles.wrapper}>
           <ul className={`${burgerStyles.list} mt-4 mr-4 ml-4`}>
-            {data.map((item) => {
+            {items.map((item) => {
               if (item["type"] === "bun") {
                 return null;
               }
@@ -71,13 +93,21 @@ const BurgerConstructor = (props) => {
         <span
           className={`${burgerStyles.amount} text text_type_main-large mr-5`}
         >
-          610
+          {items
+            .filter((item) => item["type"] === "main")
+            .reduce((acc, item) => {
+              return acc + item["price"];
+            }, 0)}
         </span>
         <svg className={`${burgerStyles.icon} mr-10`}>
           <CurrencyIcon />
         </svg>
+
         <Button
-          onClick={() => onClickSendOrder(true)}
+          onClick={() => {
+            postOrder();
+            onClickSendOrder(true);
+          }}
           type="primary"
           size="small"
         >
@@ -90,12 +120,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClickSendOrder: PropTypes.func.isRequired,
-};
-
-Stuffing.propTypes = {
-  props: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;
